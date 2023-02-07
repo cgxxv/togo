@@ -1,4 +1,4 @@
-module github.com/bradrydzewski/togo
+module github.com/cgxxv/togo
 
 go 1.18
 

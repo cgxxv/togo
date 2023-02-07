@@ -8,7 +8,7 @@ import (
 
 	"github.com/urfave/cli"
 
-	"github.com/bradrydzewski/togo/template"
+	"github.com/cgxxv/togo/template"
 )
 
 type (

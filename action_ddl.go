@@ -6,8 +6,8 @@ import (
 
 	"github.com/urfave/cli"
 
-	"github.com/bradrydzewski/togo/parser"
-	"github.com/bradrydzewski/togo/template"
+	"github.com/cgxxv/togo/parser"
+	"github.com/cgxxv/togo/template"
 )
 
 type migration struct {
