@@ -25,8 +25,20 @@ var files = []struct {
 		name: "active.zh-CN.json",
 		data: activezhCN,
 	}, {
+		name: "en-us.yaml",
+		data: enUs,
+	}, {
+		name: "es-es.yaml",
+		data: esEs,
+	}, {
+		name: "fr-fr.yaml",
+		data: frFr,
+	}, {
 		name: "translate.zh-CN.json",
 		data: translatezhCN,
+	}, {
+		name: "zh-cn.yaml",
+		data: zhCn,
 	},
 }
 
@@ -79,6 +91,27 @@ var activefrFR = `{
 var activezhCN = `{}
 `
 
+// files/en-us.yaml
+var enUs = `- id: greeting
+  translation: Hello
+
+- id: welcome
+  translation: Welcome`
+
+// files/es-es.yaml
+var esEs = `- id: greeting
+  translation: Hola
+
+- id: welcome
+  translation: Bienvenidos`
+
+// files/fr-fr.yaml
+var frFr = `- id: greeting
+  translation: Bonjour
+
+- id: welcome
+  translation: Bienvenue`
+
 // files/translate.zh-CN.json
 var translatezhCN = `{
   "greeting": {
@@ -91,3 +124,6 @@ var translatezhCN = `{
   }
 }
 `
+
+// files/zh-cn.yaml
+var zhCn = ``

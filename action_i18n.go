@@ -14,6 +14,7 @@ import (
 type (
 	i18nParams struct {
 		Package string
+		Tags    string
 		Files   []*i18nFile
 	}
 	i18nFile struct {
@@ -36,11 +37,14 @@ var i18nCommand = cli.Command{
 		},
 		cli.StringFlag{
 			Name:  "input",
-			Value: "files/*.json",
+			Value: "files/*",
 		},
 		cli.StringFlag{
 			Name:  "output",
 			Value: "i18n_gen.go",
+		},
+		cli.StringSliceFlag{
+			Name: "tags",
 		},
 		cli.BoolFlag{
 			Name: "encode",
@@ -61,6 +65,7 @@ func i18nAction(c *cli.Context) error {
 
 	params := i18nParams{
 		Package: c.String("package"),
+		Tags:    strings.Join(c.StringSlice("tags"), " "),
 	}
 
 	for _, match := range matches {
