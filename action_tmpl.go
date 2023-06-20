@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/bmatcuk/doublestar"
 	"github.com/urfave/cli"
 
 	"github.com/cgxxv/togo/template"
@@ -42,7 +43,7 @@ var tmplCommand = cli.Command{
 		},
 		cli.StringFlag{
 			Name:  "input",
-			Value: "files/*.tmpl",
+			Value: "files/**",
 		},
 		cli.StringFlag{
 			Name:  "output",
@@ -51,6 +52,10 @@ var tmplCommand = cli.Command{
 		cli.StringFlag{
 			Name:  "format",
 			Value: "text",
+		},
+		cli.StringFlag{
+			Name:  "trim-prefix",
+			Value: "files/",
 		},
 		cli.BoolFlag{
 			Name: "encode",
@@ -64,7 +69,7 @@ func tmplAction(c *cli.Context) error {
 		pattern = c.String("input")
 	}
 
-	matches, err := filepath.Glob(pattern)
+	matches, err := doublestar.Glob(pattern)
 	if err != nil {
 		return err
 	}
@@ -76,14 +81,23 @@ func tmplAction(c *cli.Context) error {
 		Funcs:   c.String("func"),
 	}
 
+	prefix := c.String("trim-prefix")
 	for _, match := range matches {
+		stat, oserr := os.Stat(match)
+		if oserr != nil {
+			return oserr
+		}
+		if stat.IsDir() {
+			continue
+		}
+
 		raw, ioerr := ioutil.ReadFile(match)
 		if ioerr != nil {
 			return ioerr
 		}
 		params.Files = append(params.Files, &tmplFile{
 			Path: match,
-			Name: filepath.Base(match),
+			Name: strings.TrimPrefix(match, prefix),
 			Base: strings.TrimSuffix(filepath.Base(match), filepath.Ext(match)),
 			Ext:  filepath.Ext(match),
 			Data: string(raw),
