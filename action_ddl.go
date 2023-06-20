@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/urfave/cli"
 
@@ -24,6 +25,7 @@ type migrationParams struct {
 	Package    string
 	Dialect    string
 	Migrations []migration
+	Tags       string
 	Logger     logger
 }
 
@@ -55,6 +57,9 @@ var ddlCommand = cli.Command{
 			Name:  "logger",
 			Value: "log", // log, logrus
 		},
+		cli.StringSliceFlag{
+			Name: "tags",
+		},
 	},
 }
 
@@ -76,6 +81,7 @@ func ddlAction(c *cli.Context) error {
 			Enabled: c.Bool("log"),
 			Package: c.String("logger"),
 		},
+		Tags: strings.Join(c.StringSlice("tags"), " "),
 	}
 
 	parse := parser.New()

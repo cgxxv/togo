@@ -21,6 +21,7 @@ import (
 type (
 	httptestParams struct {
 		Package string
+		Tags    string
 		Routes  []*httptestRoute
 	}
 	httptestRoute struct {
@@ -50,6 +51,9 @@ var httptestCommand = cli.Command{
 			Name:  "output",
 			Value: "testdata_gen.go",
 		},
+		cli.StringSliceFlag{
+			Name: "tags",
+		},
 		cli.StringFlag{
 			Name: "exclude",
 		},
@@ -74,6 +78,7 @@ func httptestAction(c *cli.Context) error {
 
 	params := httptestParams{
 		Package: c.String("package"),
+		Tags:    strings.Join(c.StringSlice("tags"), " "),
 	}
 
 	for _, match := range matches {

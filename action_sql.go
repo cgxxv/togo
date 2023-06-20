@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/urfave/cli"
 
@@ -13,6 +14,7 @@ import (
 type sqlParams struct {
 	Package    string
 	Dialect    string
+	Tags       string
 	Statements []*parser.Statement
 }
 
@@ -37,6 +39,9 @@ var sqlCommand = cli.Command{
 			Name:  "output",
 			Value: "sql_gen.go",
 		},
+		cli.StringSliceFlag{
+			Name: "tags",
+		},
 	},
 }
 
@@ -54,6 +59,7 @@ func sqlAction(c *cli.Context) error {
 	params := sqlParams{
 		Package: c.String("package"),
 		Dialect: c.String("dialect"),
+		Tags:    strings.Join(c.StringSlice("tags"), " "),
 	}
 
 	parse := parser.New()

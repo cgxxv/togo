@@ -17,6 +17,7 @@ type (
 	httpParams struct {
 		Encode  bool
 		Package string
+		Tags    string
 		Files   []*httpFile
 	}
 	httpFile struct {
@@ -49,15 +50,18 @@ var httpCommand = cli.Command{
 			Value: "http_gen.go",
 		},
 		cli.StringFlag{
-			Name: "exclude",
-		},
-		cli.StringFlag{
 			Name:  "trim-prefix",
 			Value: "files",
 		},
 		cli.StringSliceFlag{
 			Name:  "plain-text",
 			Value: &cli.StringSlice{"html", "js", "css"},
+		},
+		cli.StringSliceFlag{
+			Name: "tags",
+		},
+		cli.StringFlag{
+			Name: "exclude",
 		},
 	},
 }
@@ -76,6 +80,7 @@ func httpAction(c *cli.Context) error {
 	params := httpParams{
 		Encode:  c.Bool("encode"),
 		Package: c.String("package"),
+		Tags:    strings.Join(c.StringSlice("tags"), " "),
 	}
 
 	var (
