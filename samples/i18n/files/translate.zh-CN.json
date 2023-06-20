@@ -1,0 +1,10 @@
+{
+  "greeting": {
+    "hash": "sha1-f7ff9e8b7bb2e09b70935a5d785e0cc5d9d0abf0",
+    "other": "Hello"
+  },
+  "welcome": {
+    "hash": "sha1-ca4f9dcf204e2037bfe5884867bead98bd9cbaf8",
+    "other": "Welcome"
+  }
+}

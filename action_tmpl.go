@@ -18,6 +18,7 @@ type (
 		Package string
 		Format  string
 		Funcs   string
+		Tags    string
 		Files   []*tmplFile
 	}
 	tmplFile struct {
@@ -57,6 +58,9 @@ var tmplCommand = cli.Command{
 			Name:  "trim-prefix",
 			Value: "files/",
 		},
+		cli.StringSliceFlag{
+			Name: "tags",
+		},
 		cli.BoolFlag{
 			Name: "encode",
 		},
@@ -79,6 +83,7 @@ func tmplAction(c *cli.Context) error {
 		Package: c.String("package"),
 		Format:  c.String("format"),
 		Funcs:   c.String("func"),
+		Tags:    strings.Join(c.StringSlice("tags"), " "),
 	}
 
 	prefix := c.String("trim-prefix")

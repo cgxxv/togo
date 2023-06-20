@@ -36,7 +36,7 @@ var i18nCommand = cli.Command{
 		},
 		cli.StringFlag{
 			Name:  "input",
-			Value: "files/*.all.json",
+			Value: "files/*.json",
 		},
 		cli.StringFlag{
 			Name:  "output",
